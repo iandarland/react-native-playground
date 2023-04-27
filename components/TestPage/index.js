@@ -1,7 +1,7 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Cat from '../Cat';
-import CatPix from '../CatPix';
+import CatPix from '../../pages/Pokedex';
 
 export default function TestPage() {
   return (
