@@ -1,10 +1,13 @@
 import React, { useState, useEffect }from "react";
 import { Text, View } from "react-native";
+// import {useNavigate} from "react-router-dom"
 import syles from "./style"
 import axios from "axios"
 
 const Pokemon = ({ match }) => {
     const [pokeData, setPokeData] = useState({})
+
+    // const history = useNavigate()
 
     const getData = async () => {
         console.log(match)
