@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { Text, FlatList } from "react-native";
+import { Text, FlatList, TouchableOpacity } from "react-native";
 import { Link } from "react-router-native"
 import axios from "axios";
 import PokeCard from "../PokeCard";
 import {ListItem, Avatar} from "react-native-elements"
 
-const PokeContainer = () => {
+const PokeContainer = ({ navigation }) => {
   const [pokeData, setPokeData] = useState([]);
 
   useEffect(() => {
@@ -28,9 +28,11 @@ const PokeContainer = () => {
       data={pokeData}
       keyExtractor={({ data }) => data.id}
       renderItem={({item}) => (
-        <Link to = {`/pokemon/${item.data.id}`}>
-        <PokeCard data={item.data}/>
-        </Link>
+        // <Link to = {`/pokemon/${item.data.id}`}>
+        <TouchableOpacity onPress = {() => navigation.navigate('pokemon', { id : item.data.id} )}>
+          <PokeCard data={item.data} />
+        </TouchableOpacity>
+        // {/* </Link> */}
       )}
     />
   );

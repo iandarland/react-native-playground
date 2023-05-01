@@ -1,35 +1,26 @@
 import React from "react";
-import {NativeRouter, Route, Link} from "react-router-native"
-// import { useHistory } from 'react-router-dom'
-import { Header } from "react-native-elements"
+import { NavigationContainer } from "@react-navigation/native"
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Pokedex from "./pages/Pokedex";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import Pokemon from "./pages/Pokemon";
 
+
+const Stack = createNativeStackNavigator()
+
 const App = () =>{
-    // const history = useHistory()
+
     return(
         <SafeAreaProvider>
-        <NativeRouter>
-        <Header
-            leftComponent={{ icon: 'menu', color: '#fff', iconStyle: { color: '#fff' } }}
-            centerComponent={{ text: 'Pokedex', style: { color: '#fff' } }}
-            rightComponent={{ icon: 'home', color: '#fff', onPress: () => window.redirect('/')}}
-        />
+        <NavigationContainer>
         <View style = {styles.container}>
-            <View style ={styles.nav}>
-                <Link to='/' underlayColor="#f0f4f7" style={styles.navItem} replace>
-                  <Text>Home</Text>
-                </Link>
-                <Link to="/pokemon/:id" underlayColor="#f0f4f7" style={styles.navItem}>
-                    <Text>Poke</Text>
-                </Link>
-            </View>
-            <Route exact path= "/" component= {Pokedex}/>
-            <Route path = "/pokemon/:id" component = {Pokemon}/>
+            <Stack.Navigator initialRouteName="Pokedex">
+                <Stack.Screen name= "Pokedex" component= {Pokedex}/>
+                <Stack.Screen name = "pokemon" component = {Pokemon}/>
+            </Stack.Navigator>
         </View>
-        </NativeRouter>
+        </NavigationContainer>
         </SafeAreaProvider>
     )
 }

@@ -4,14 +4,15 @@ import { Text, View } from "react-native";
 import syles from "./style"
 import axios from "axios"
 
-const Pokemon = ({ match }) => {
+const Pokemon = ({ route }) => {
     const [pokeData, setPokeData] = useState({})
+
+    const { id } = route.params
 
     // const history = useNavigate()
 
     const getData = async () => {
-        console.log(match)
-        const data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${+match?.params.id}/`)
+        const data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
         setPokeData(data.data)
     }
 
