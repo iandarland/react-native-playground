@@ -17,7 +17,10 @@ const App = () =>{
         <View style = {styles.container}>
             <Stack.Navigator initialRouteName="Pokedex">
                 <Stack.Screen name= "Pokedex" component= {Pokedex}/>
-                <Stack.Screen name = "pokemon" component = {Pokemon}/>
+                <Stack.Screen 
+                    name = "pokemon" 
+                    component = {Pokemon}
+                    options= {({route}) => ({title: route.params.title})} />
             </Stack.Navigator>
         </View>
         </NavigationContainer>
