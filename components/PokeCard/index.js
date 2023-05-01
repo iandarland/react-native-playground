@@ -3,7 +3,7 @@ import { ListItem, Avatar } from "react-native-elements"
 import utils from "../../utils"
 
 const PokeCard = ({data:monster}) => {
-    useEffect(()=>{console.log(monster)},[])
+    // useEffect(()=>{console.log(monster)},[])
     return(
         <ListItem key={monster.id} bottomDivider>
         <Avatar source={{uri: monster.sprites.front_default}} />
