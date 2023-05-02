@@ -29,7 +29,7 @@ const Pokemon = ({ route }) => {
     }, [])
 
     return(
-        <ScrollView style= {styles.container}>
+        <View style= {styles.container}>
             <ListItem.Accordion 
                 content={
                     <>
@@ -41,6 +41,7 @@ const Pokemon = ({ route }) => {
                 }
                 isExpanded={expanded.appearances}
                 onPress={() => setExpanded({...expanded, appearances: !expanded.appearances})}>
+                    <ScrollView style= {styles.accordionBody}>
                 {pokeData.game_indices?.map((item, i) => (
                     <ListItem key={i} bottomDivider>
                         <ListItem.Content>
@@ -49,6 +50,7 @@ const Pokemon = ({ route }) => {
                         <ListItem.Chevron />
                     </ListItem>
                 ))}
+                    </ScrollView>
             </ListItem.Accordion>
             <ListItem.Accordion 
                 content={
@@ -61,6 +63,8 @@ const Pokemon = ({ route }) => {
                 }
                 isExpanded={expanded.moves}
                 onPress={() => setExpanded({...expanded, moves: !expanded.moves})}>
+                <ScrollView style= {styles.accordionBody}>
+
                 {pokeData.moves?.map((item, i) => (
                     <ListItem key={i} bottomDivider>
                         <ListItem.Content>
@@ -69,8 +73,10 @@ const Pokemon = ({ route }) => {
                         <ListItem.Chevron />
                     </ListItem>
                 ))}
+
+                </ScrollView>
             </ListItem.Accordion>
-        </ScrollView>
+        </View>
     )
 }
 

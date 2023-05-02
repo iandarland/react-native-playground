@@ -5,6 +5,7 @@ import Pokedex from "./pages/Pokedex";
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import Pokemon from "./pages/Pokemon";
+import PokeHead from "./pages/Pokemon/PokeHead";
 
 
 const Stack = createNativeStackNavigator()
@@ -20,7 +21,14 @@ const App = () =>{
                 <Stack.Screen 
                     name = "pokemon" 
                     component = {Pokemon}
-                    options= {({route}) => ({title: route.params.title})} />
+                    // options ={{
+                    //   headerTitle: (props) => <PokeHead {...props}/>
+                    // }}
+                    options= {({route}) => ({
+                      headerTitle: () => <PokeHead {...route}/>
+                    })} 
+                    // options= {({route}) => ({title: route.params.title})} 
+                  />
             </Stack.Navigator>
         </View>
         </NavigationContainer>

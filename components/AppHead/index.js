@@ -10,7 +10,7 @@ const AppHead = ({ navigation }) => {
         leftComponent={{ icon: 'menu', color: '#fff', iconStyle: { color: '#fff' } }}
         centerComponent={{ text: 'Pokedex', style: { color: '#fff' } }}
         rightComponent={{ icon: 'home', color: '#fff', onPress: () => navigation.navigate('home')}}
-    />
+        />
     )
 }
 
