@@ -83,7 +83,7 @@ const PokeContainer = ({ navigation }) => {
       data={pokeData.search}
       keyExtractor={({ data }) => data.id}
       renderItem={({item}) => (
-        <TouchableOpacity onPress = {() => navigation.navigate('pokemon', { id : item.data.id, thumbData: item.data.sprites.front_default, title: utils.capitalize(item.data.name)} )}>
+        <TouchableOpacity onPress = {() => navigation.navigate('Pokemon', { id : item.data.id, thumbData: item.data.sprites.front_default, title: utils.capitalize(item.data.name)} )}>
           <PokeCard data={item.data} />
         </TouchableOpacity>
       )}

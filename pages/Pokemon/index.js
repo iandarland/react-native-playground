@@ -6,7 +6,7 @@ import utils from "../../utils"
 import styles from "./style"
 import axios from "axios"
 
-const Pokemon = ({ route }) => {
+const Pokemon = ({ route, navigation }) => {
     const [pokeData, setPokeData] = useState({})
     const [expanded, setExpanded] = useState(
         {
@@ -66,12 +66,14 @@ const Pokemon = ({ route }) => {
                 <ScrollView style= {styles.accordionBody}>
 
                 {pokeData.moves?.map((item, i) => (
-                    <ListItem key={i} bottomDivider>
-                        <ListItem.Content>
-                            <ListItem.Title><Text>{utils.capitalize(item.move.name)}</Text></ListItem.Title>
-                        </ListItem.Content>
-                        <ListItem.Chevron />
-                    </ListItem>
+                    <TouchableOpacity key={i} onPress={()=> navigation.navigate('Move Details', { url: item.move.url} )}>
+                        <ListItem  bottomDivider>
+                            <ListItem.Content>
+                                <ListItem.Title><Text>{utils.capitalize(item.move.name)}</Text></ListItem.Title>
+                            </ListItem.Content>
+                            <ListItem.Chevron />
+                        </ListItem>
+                    </TouchableOpacity>
                 ))}
 
                 </ScrollView>

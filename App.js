@@ -6,6 +6,7 @@ import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import Pokemon from "./pages/Pokemon";
 import PokeHead from "./pages/Pokemon/PokeHead";
+import MoveDetail from "./pages/MoveDetail";
 
 
 const Stack = createNativeStackNavigator()
@@ -18,9 +19,10 @@ const App = () =>{
         <View style = {styles.container}>
             <Stack.Navigator initialRouteName="Pokedex">
                 <Stack.Screen name= "Pokedex" component= {Pokedex}/>
+                <Stack.Screen name= "Move Details" component= {MoveDetail}/>
                 <Stack.Screen 
-                    name = "pokemon" 
-                    component = {Pokemon}
+                    name = "Pokemon" 
+                    component = { Pokemon }
                     // options ={{
                     //   headerTitle: (props) => <PokeHead {...props}/>
                     // }}
