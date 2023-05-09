@@ -19,3 +19,4 @@ package.lock.json
 .metro-health-check*
 /package-lock.json
 package-lock.json
+.env
