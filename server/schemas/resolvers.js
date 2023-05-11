@@ -1,6 +1,7 @@
 const {AuthenticationError} = require('apollo-server-express');
 const { User } = require('../models');
-const { signToken } = require('../utils/auth')
+const { signToken } = require('../utils/auth');
+const Pokemon = require('../models/Pokemon');
 
 const resolvers = {
     Query:{
@@ -22,6 +23,11 @@ const resolvers = {
                 return userData
             }
             throw new AuthenticationError('No Userdata Found')
+        },
+        pokemon: async () => {
+            const pokemons = await Pokemon.findAll()
+
+            return pokemons
         }
     },
     Mutation: {
@@ -47,6 +53,11 @@ const resolvers = {
             const token = signToken(user)
 
             return { token, user }
+        },
+        addPokemon: async (parent, args) =>{
+            const pokemon = await Pokemon.create(args)
+
+            return pokemon
         }
     }
 }
