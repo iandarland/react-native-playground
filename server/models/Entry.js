@@ -16,14 +16,16 @@ Entry.init(
 			references: {
                 model: 'user',
                 key: 'id'
-            }
+            },
+            unique:false
 		},
 		pokemon_id: {
 			type: DataTypes.INTEGER,
 			references: {
                 model: 'pokemon',
                 key: 'id'
-            }
+            },
+            unique:false
 		},
 		note: {
 			type: DataTypes.STRING,

@@ -9,6 +9,7 @@ const typeDefs = gql`
         lastName: String!
         email: String!
         password: String!
+        pokedex_entries: [Pokemon]
     }
 
     type Pokemon{
@@ -35,6 +36,7 @@ const typeDefs = gql`
         login(email:String!, password: String!): Auth
         addUser(username:String!, firstName:String!, lastName:String!, email:String!, password:String!) : Auth
         addPokemon(id: ID!, name: String!, sprite: String!, url: String!, type: String!) : Pokemon
+        addEntry(pokemon_id: String!, note: String): Auth
     }
 `
 

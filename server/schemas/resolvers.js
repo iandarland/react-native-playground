@@ -2,6 +2,7 @@ const {AuthenticationError} = require('apollo-server-express');
 const { User } = require('../models');
 const { signToken } = require('../utils/auth');
 const Pokemon = require('../models/Pokemon');
+const Entry = require('../models/Entry');
 
 const resolvers = {
     Query:{
@@ -58,6 +59,30 @@ const resolvers = {
             const pokemon = await Pokemon.create(args)
 
             return pokemon
+        },
+        addEntry: async (parent, {pokemon_id, note}, context) => {
+            // console.log(args)
+            const token = context.headers.authorization
+            const { user } = context
+            const newEntry = await Entry.create({
+                user_id: user.id,
+                pokemon_id,
+                note
+            })
+            if(newEntry){
+               const getUser = await User.findOne({
+                where:{
+                    id: user.id
+                },
+                include: [{
+                    model: Pokemon,
+                    through: Entry,
+                    as: "pokedex_entries"
+                }]
+               }) 
+               return {user:getUser, token}
+            }
+            return {user: getUser , token}
         }
     }
 }
