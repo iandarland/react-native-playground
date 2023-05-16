@@ -19,7 +19,16 @@ const resolvers = {
             throw new AuthenticationError('User is not logged in')
         },
         users: async () => {
-            const userData = await User.findAll()
+            const userData = await User.findAll({
+                include:[
+                    {
+                        model: Pokemon,
+                        as: "pokedex_entries",
+                        through: Entry
+                    }
+                ]
+            })
+            console.log(userData)
             if(userData.length){
                 return userData
             }

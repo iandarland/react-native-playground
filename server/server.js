@@ -33,10 +33,10 @@ app.get('/', (req, res) => {
 const startApolloServer = async (typeDefs, resolvers) => {
   await server.start();
   server.applyMiddleware({ app });
+  await sequelize.sync({ force: false });
   
   // db.once('open', () => {
     app.listen(PORT, () => {
-      sequelize.sync({ force: false });
       console.log(`API server running on port ${PORT}!`);
       console.log(`Use GraphQL at http://localhost:${PORT}${server.graphqlPath}`);
     })
