@@ -1,6 +1,6 @@
 import React from 'react'
 import { Input, Card, Button } from 'react-native-elements'
-import { View } from 'react-native/types'
+import { View } from 'react-native'
 
 const SignIn = () => {
     return(
