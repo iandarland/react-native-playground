@@ -2,6 +2,7 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
 import Pokedex from "./pages/Pokedex";
 import PokedexTab from "./tabs/PokedexTab"
 import { View, Text, StyleSheet } from "react-native";
@@ -14,10 +15,15 @@ import AccountTab from "./tabs/AccountTab";
 
 const Stack = createNativeStackNavigator()
 const Tab = createMaterialBottomTabNavigator()
+const client = new ApolloClient({
+  uri: "/graphql",
+  cache: new InMemoryCache()
+})
 
 const App = () =>{
 
     return(
+      <ApolloProvider client ={client}>
         <SafeAreaProvider>
         <NavigationContainer>
         <View style = {styles.container}>
@@ -28,6 +34,7 @@ const App = () =>{
         </View>
         </NavigationContainer>
         </SafeAreaProvider>
+      </ApolloProvider>
     )
 }
 const styles = StyleSheet.create({

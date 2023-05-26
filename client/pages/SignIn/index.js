@@ -9,7 +9,7 @@ const SignIn = () => {
                 <Card.Title>Sign In</Card.Title>
                 <Card.Divider/>
                 <Input placeholder ="Username" leftIcon={{type : "font-awesome", name: "user"}}/>
-                <Input placeholder="Password" secureTextEntry={true} />
+                <Input placeholder="Password" leftIcon= {{type : "font-awesome", name: "lock"}} secureTextEntry={true} />
                 <Button title= "Submit"/>
             </Card>
         </View>
