@@ -1,40 +1,55 @@
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Pokedex from "./pages/Pokedex";
+import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
+import { setContext } from '@apollo/client/link/context';
+import PokedexTab from "./tabs/PokedexTab"
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context"
-import Pokemon from "./pages/Pokemon";
-import PokeHead from "./pages/Pokemon/PokeHead";
-import MoveDetail from "./pages/MoveDetail";
+import AccountTab from "./tabs/AccountTab";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GRAPHQL_URI } from "@env"
 
 
-const Stack = createNativeStackNavigator()
+
+const Tab = createMaterialBottomTabNavigator()
+
+
+const httpLink = createHttpLink({
+  uri: GRAPHQL_URI
+});
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await AsyncStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
+const client = new ApolloClient({
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 const App = () =>{
 
     return(
+      <ApolloProvider client ={client}>
         <SafeAreaProvider>
         <NavigationContainer>
         <View style = {styles.container}>
-            <Stack.Navigator initialRouteName="Pokedex">
-                <Stack.Screen name= "Pokedex" component= {Pokedex}/>
-                <Stack.Screen name= "Move Details" component= {MoveDetail}/>
-                <Stack.Screen 
-                    name = "Pokemon" 
-                    component = { Pokemon }
-                    // options ={{
-                    //   headerTitle: (props) => <PokeHead {...props}/>
-                    // }}
-                    options= {({route}) => ({
-                      headerTitle: () => <PokeHead {...route}/>
-                    })} 
-                    // options= {({route}) => ({title: route.params.title})} 
-                  />
-            </Stack.Navigator>
+            <Tab.Navigator initialRouteName="Pokedex">
+              <Tab.Screen name="Pokedex" component={PokedexTab}/>
+              <Tab.Screen name= "Account" component={AccountTab}/>
+            </Tab.Navigator>
         </View>
         </NavigationContainer>
         </SafeAreaProvider>
+      </ApolloProvider>
     )
 }
 const styles = StyleSheet.create({

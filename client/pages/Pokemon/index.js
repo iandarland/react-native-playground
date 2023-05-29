@@ -20,7 +20,6 @@ const Pokemon = ({ route, navigation }) => {
 
     const getData = async () => {
         const data = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}/`)
-        console.log(data.data)
         setPokeData(data.data)
     }
 
