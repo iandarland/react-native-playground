@@ -1,5 +1,7 @@
 // use this to decode a token and get the user's information out of it
 import decode from 'jwt-decode';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 // create a new class to instantiate for a user
 class AuthService {
@@ -27,20 +29,23 @@ class AuthService {
     }
   }
 
-  getToken() {
+  async getToken() {
     // Retrieves the user token from localStorage
-    return localStorage.getItem('id_token');
+    const token = await AsyncStorage.getItem('id_token');
+    return token
   }
 
-  login(idToken) {
+  async login(idToken, navigation) {
     // Saves user token to localStorage
-    localStorage.setItem('id_token', idToken);
-    window.location.assign('/');
+    await AsyncStorage.setItem('id_token', idToken);
+    navigation.navigate('My Account');
+    navigation.popToTop()
   }
 
-  logout() {
+  async logout() {
     // Clear user token and profile data from localStorage
-    localStorage.removeItem('id_token');
+    await AsyncStorage.removeItem('id_token');
+    
     // this will reload the page and reset the state of the application
     window.location.assign('/');
   }

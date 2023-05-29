@@ -2,23 +2,38 @@ import React from "react";
 import { NavigationContainer } from "@react-navigation/native"
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
-import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client";
-import Pokedex from "./pages/Pokedex";
+import { ApolloClient, ApolloProvider, InMemoryCache, createHttpLink } from "@apollo/client";
+import { setContext } from '@apollo/client/link/context';
 import PokedexTab from "./tabs/PokedexTab"
 import { View, Text, StyleSheet } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context"
-import Pokemon from "./pages/Pokemon";
-import PokeHead from "./pages/Pokemon/PokeHead";
-import MoveDetail from "./pages/MoveDetail";
 import AccountTab from "./tabs/AccountTab";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { GRAPHQL_URI } from "@env"
 
 
-const Stack = createNativeStackNavigator()
+
 const Tab = createMaterialBottomTabNavigator()
+
+
+const httpLink = createHttpLink({
+  uri: GRAPHQL_URI
+});
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await AsyncStorage.getItem('id_token');
+  return {
+    headers: {
+      ...headers,
+      authorization: token ? `Bearer ${token}` : '',
+    },
+  };
+});
+
 const client = new ApolloClient({
-  uri: "/graphql",
-  cache: new InMemoryCache()
-})
+  link: authLink.concat(httpLink),
+  cache: new InMemoryCache(),
+});
 
 const App = () =>{
 
