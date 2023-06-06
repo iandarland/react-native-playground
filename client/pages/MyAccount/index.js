@@ -1,17 +1,30 @@
 import React, {useEffect} from "react"
-import {Text} from "react-native-elements"
+import {Text, Card} from "react-native-elements"
+import {ScrollView, View} from "react-native"
 import {useQuery} from "@apollo/client"
 import { QUERY_ME } from "../../utils/queries"
+import Auth from "../../utils/auth"
 
-const MyAccount = () => {
+const MyAccount = ({isLoggedIn}) => {
     const {loading, data} =useQuery(QUERY_ME)
-
+    // console.log(query)
     useEffect(() => {
-        console.log(data)
-    },[loading])
-
+        console.log("this is the data", data)
+    }, [loading])
+    if(loading){
+        return(
+            <Text>...loading</Text>
+        )
+    }
+    
     return (
-        <Text>This is the Account Page</Text>
+        <ScrollView>
+            <View>
+                <Card>
+                    <Card.Title>{data?.me.username}</Card.Title>
+                </Card>
+            </View>
+        </ScrollView>
     )
 }
 

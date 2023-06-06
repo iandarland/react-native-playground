@@ -7,12 +7,15 @@ const Entry = require('../models/Entry');
 const resolvers = {
     Query:{
         me: async (parent, args, context) =>{
+            console.log("context user", context.user)
             if(context.user) {
+                
                 const userData = await User.findOne({
                     where: {
                         id: context.user.id
                     }
                 })
+                
                 return userData
             }
             
@@ -28,7 +31,6 @@ const resolvers = {
                     }
                 ]
             })
-            console.log(userData)
             if(userData.length){
                 return userData
             }
