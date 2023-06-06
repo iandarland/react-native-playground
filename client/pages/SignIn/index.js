@@ -5,23 +5,24 @@ import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../../utils/mutations'
 import Auth from '../../utils/auth'
 
-const SignIn = ({ navigation }) => {
+const SignIn = ({ isLoggedIn, navigation }) => {
     const [signInData, setSignInData] = useState({email: "", password: ""})
 
     const [login, { error }] = useMutation(LOGIN_USER)
 
     useEffect(() => {
-        Auth.loggedIn() && navigation.navigate("My Account")
+        isLoggedIn?.loggedIn && navigation.navigate("My Account")
     }, [])
 
     const handleFormSubmit = async () => {
         try{
-            console.log(signInData)
             const { data } = await login({
                 variables: signInData
             })
             console.log(data)
-            Auth.login(data.login.token, navigation)
+            await Auth.login(data.login.token, navigation)
+            navigation.navigate('My Account');
+            navigation.popToTop()
         }
         catch (err){
             console.log(err)

@@ -4,7 +4,7 @@ import { Avatar } from "react-native-elements";
 import styles from "./style";
 
 const PokeHead  = ({params}) => {
-    useEffect(()=>{console.log(params.title)});
+    // useEffect(()=>{console.log(params.title)});
     if(!params.title){
         return(
             <Text>...loading</Text>

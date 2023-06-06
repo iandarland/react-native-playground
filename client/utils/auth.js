@@ -6,14 +6,16 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 // create a new class to instantiate for a user
 class AuthService {
   // get user data
-  getProfile() {
-    return decode(this.getToken());
+  async getProfile() {
+    const token = await this.getToken();
+    return decode(token)
   }
 
   // check if user's logged in
-  loggedIn() {
+  async loggedIn() {
     // Checks if there is a saved token and it's still valid
-    const token = this.getToken();
+    const token = await this.getToken();
+    console.log(token)
     return !!token && !this.isTokenExpired(token); // handwaiving here
   }
 
@@ -23,9 +25,12 @@ class AuthService {
       const decoded = decode(token);
       if (decoded.exp < Date.now() / 1000) {
         return true;
-      } else return false;
+      } else {
+        // this.logout()
+        return false;
+      }
     } catch (err) {
-      return false;
+      return true;
     }
   }
 
@@ -38,16 +43,17 @@ class AuthService {
   async login(idToken, navigation) {
     // Saves user token to localStorage
     await AsyncStorage.setItem('id_token', idToken);
-    navigation.navigate('My Account');
-    navigation.popToTop()
+
+    
+    return idToken
   }
 
   async logout() {
     // Clear user token and profile data from localStorage
     await AsyncStorage.removeItem('id_token');
-    
+    console.log("USER LOGGED OUT")
     // this will reload the page and reset the state of the application
-    window.location.assign('/');
+    // window.location.assign('/');
   }
 }
 
